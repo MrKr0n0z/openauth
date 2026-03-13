@@ -1,192 +1,159 @@
-# 🔐 Laravel OAuth 2.0 Social Login
+Laravel OAuth 2.0 Inicio de Sesión Social
+Una aplicación completa de Laravel 11+ que implementa autenticación social con OAuth 2.0 para Discord, Spotify, Twitch y X (Twitter) usando Laravel Socialite y SocialiteProviders.
+Características
 
-A complete Laravel 11+ application implementing OAuth 2.0 social authentication with **Discord**, **Spotify**, **Twitch**, and **X (Twitter)** using Laravel Socialite and SocialiteProviders.
+Integración OAuth con Discord
+Integración OAuth con Spotify
+Integración OAuth con Twitch
+Integración OAuth con X/Twitter
+Gestión segura de sesiones
+Perfil de usuario con soporte de avatar
+Interfaz responsiva con Tailwind CSS
+Soporte para bases de datos SQLite/MySQL
+Despliegue sencillo
 
-![Laravel](https://img.shields.io/badge/Laravel-11+-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+Inicio Rápido
+Requisitos previos
 
-## ✨ Features
+PHP 8.2+
+Composer
+MySQL o SQLite
+Credenciales OAuth de Discord, Spotify, Twitch y X/Twitter
 
-- 🎮 **Discord** OAuth integration
-- 🎵 **Spotify** OAuth integration
-- 📺 **Twitch** OAuth integration
-- 🐦 **X/Twitter** OAuth integration
-- 🔒 Secure session management
-- 👤 User profile with avatar support
-- 📱 Responsive UI with Tailwind CSS
-- 🗄️ SQLite/MySQL database support
-- 🚀 Easy deployment
-
-## 🚀 Quick Start
-
-### Prerequisites
-- PHP 8.2+
-- Composer
-- MySQL or SQLite
-- OAuth app credentials from Discord, Spotify, Twitch, and X/Twitter
-
-### Installation
-
-```bash
-# Clone the repository
+Instalación
+bash# Clonar el repositorio
 git clone https://github.com/yourusername/laravel-oauth-social-login.git
 cd laravel-oauth-social-login
 
-# Install dependencies
+# Instalar dependencias
 composer install
 
-# Install Socialite packages
+# Instalar paquetes de Socialite
 composer require laravel/socialite
 composer require socialiteproviders/discord socialiteproviders/spotify
 composer require socialiteproviders/twitch socialiteproviders/twitter
 
-# Setup environment
+# Configurar el entorno
 cp .env.example .env
 php artisan key:generate
 
-# Configure database (SQLite example)
+# Configurar la base de datos (ejemplo con SQLite)
 touch database/database.sqlite
 
-# Run migrations
+# Ejecutar migraciones
 php artisan migrate
 
-# Start the server
+# Iniciar el servidor
 php artisan serve
-```
+Visita http://localhost:8000 para ver la aplicación.
+Documentación
 
-Visit `http://localhost:8000` to see the application.
+INSTALLATION.md - Instrucciones detalladas de instalación
+OAUTH_SETUP.md - Guías paso a paso para configurar cada proveedor OAuth
 
-## 📚 Documentation
-
-- **[INSTALLATION.md](INSTALLATION.md)** - Detailed installation instructions
-- **[OAUTH_SETUP.md](OAUTH_SETUP.md)** - Step-by-step OAuth provider setup guides
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Add these to your `.env` file:
-
-```env
-# Discord
-DISCORD_CLIENT_ID=your_client_id
-DISCORD_CLIENT_SECRET=your_client_secret
+Configuración
+Variables de entorno
+Agrega esto a tu archivo .env:
+env# Discord
+DISCORD_CLIENT_ID=tu_client_id
+DISCORD_CLIENT_SECRET=tu_client_secret
 
 # Spotify
-SPOTIFY_CLIENT_ID=your_client_id
-SPOTIFY_CLIENT_SECRET=your_client_secret
+SPOTIFY_CLIENT_ID=tu_client_id
+SPOTIFY_CLIENT_SECRET=tu_client_secret
 
 # Twitch
-TWITCH_CLIENT_ID=your_client_id
-TWITCH_CLIENT_SECRET=your_client_secret
+TWITCH_CLIENT_ID=tu_client_id
+TWITCH_CLIENT_SECRET=tu_client_secret
 
 # X/Twitter
-X_CLIENT_ID=your_client_id
-X_CLIENT_SECRET=your_client_secret
+X_CLIENT_ID=tu_client_id
+X_CLIENT_SECRET=tu_client_secret
 ```
 
-## 🛣️ Routes
+## Rutas
 
-| Method | URI | Description |
+| Método | URI | Descripción |
 |--------|-----|-------------|
-| GET | `/` | Home page with login buttons |
-| GET | `/auth/{provider}/redirect` | Redirect to OAuth provider |
-| GET | `/auth/{provider}/callback` | Handle OAuth callback |
-| POST | `/logout` | Logout user |
-| GET | `/dashboard` | User dashboard (protected) |
+| GET | `/` | Página de inicio con botones de acceso |
+| GET | `/auth/{provider}/redirect` | Redirige al proveedor OAuth |
+| GET | `/auth/{provider}/callback` | Maneja el callback OAuth |
+| POST | `/logout` | Cerrar sesión |
+| GET | `/dashboard` | Panel de usuario (protegido) |
 
-**Supported providers:** `discord`, `spotify`, `twitch`, `x-twitter`
+**Proveedores soportados:** `discord`, `spotify`, `twitch`, `x-twitter`
 
-## 📁 Project Structure
-
+## Estructura del proyecto
 ```
 app/
-├── Http/Controllers/AuthController.php    # OAuth authentication logic
-├── Models/User.php                        # User model with OAuth fields
-└── Providers/AppServiceProvider.php       # Socialite event listeners
+├── Http/Controllers/AuthController.php    # Lógica de autenticación OAuth
+├── Models/User.php                        # Modelo de usuario con campos OAuth
+└── Providers/AppServiceProvider.php       # Listeners de eventos de Socialite
 
-config/services.php                        # OAuth provider configs
+config/services.php                        # Configuraciones de proveedores OAuth
 
 database/migrations/
-└── 0001_01_01_000000_create_users_table.php  # User table migration
+└── 0001_01_01_000000_create_users_table.php  # Migración de la tabla de usuarios
 
 resources/views/
-├── welcome.blade.php                      # Login page
-└── dashboard.blade.php                    # Dashboard
+├── welcome.blade.php                      # Página de inicio de sesión
+└── dashboard.blade.php                    # Panel de usuario
 
-routes/web.php                             # Application routes
-```
+routes/web.php                             # Rutas de la aplicación
+Esquema de base de datos
+La tabla users incluye:
+phpid                      - Clave primaria
+name                    - Nombre del usuario
+email                   - Correo electrónico (nullable)
+avatar                  - URL de foto de perfil (nullable)
+provider                - Proveedor OAuth (discord/spotify/twitch/x-twitter)
+provider_id             - ID del usuario en el proveedor
+provider_token          - Token de acceso (500 caracteres, nullable)
+provider_refresh_token  - Token de actualización (500 caracteres, nullable)
+created_at, updated_at  - Marcas de tiempo
+Restricción única: (provider, provider_id) - Cada ID de proveedor es único por proveedor
+Seguridad
 
-## 🗄️ Database Schema
+Tokens OAuth almacenados de forma segura en la base de datos
+Protección CSRF habilitada
+Gestión de sesiones con la seguridad integrada de Laravel
+El campo de contraseña es nullable (autenticación solo por OAuth)
+Variables de entorno para datos sensibles
 
-The `users` table includes:
+Despliegue
+Lista de verificación para producción
 
-```php
-id                      - Primary key
-name                    - User's display name
-email                   - Email (nullable)
-avatar                  - Profile picture URL (nullable)
-provider                - OAuth provider (discord/spotify/twitch/x-twitter)
-provider_id             - Provider's user ID
-provider_token          - Access token (500 chars, nullable)
-provider_refresh_token  - Refresh token (500 chars, nullable)
-created_at, updated_at  - Timestamps
-```
+Establecer APP_ENV=production en .env
+Actualizar APP_URL con tu dominio de producción
+Usar HTTPS (requerido por los proveedores OAuth)
+Actualizar las URIs de redireccionamiento en los paneles de cada proveedor
+Establecer un APP_KEY seguro
+Configurar las credenciales correctas de la base de datos
+Ejecutar php artisan config:cache
+Ejecutar php artisan route:cache
 
-**Unique constraint:** `(provider, provider_id)` - Each provider ID is unique per provider
+Actualizar las URLs de callback OAuth
+Asegúrate de actualizar las URIs de redireccionamiento en el panel de cada proveedor:
 
-## 🔒 Security
+Discord: https://tudominio.com/auth/discord/callback
+Spotify: https://tudominio.com/auth/spotify/callback
+Twitch: https://tudominio.com/auth/twitch/callback
+X/Twitter: https://tudominio.com/auth/x-twitter/callback
 
-- OAuth tokens stored securely in database
-- CSRF protection enabled
-- Session management with Laravel's built-in security
-- Password field is nullable (OAuth-only auth)
-- Environment variables for sensitive data
+Contribuciones
+Las contribuciones son bienvenidas. No dudes en enviar un Pull Request.
+Licencia
+Este proyecto es de código abierto y está disponible bajo la Licencia MIT.
+Agradecimientos
 
-## 🚀 Deployment
+Laravel
+Laravel Socialite
+SocialiteProviders
+Tailwind CSS
 
-### Production Checklist
+Soporte
+Para preguntas o problemas:
 
-1. ✅ Set `APP_ENV=production` in `.env`
-2. ✅ Update `APP_URL` to your production domain
-3. ✅ Use HTTPS (required by OAuth providers)
-4. ✅ Update OAuth redirect URIs in provider dashboards
-5. ✅ Set strong `APP_KEY`
-6. ✅ Configure proper database credentials
-7. ✅ Run `php artisan config:cache`
-8. ✅ Run `php artisan route:cache`
-
-### Update OAuth Callback URLs
-
-Make sure to update redirect URIs in each provider's dashboard:
-- Discord: `https://yourdomain.com/auth/discord/callback`
-- Spotify: `https://yourdomain.com/auth/spotify/callback`
-- Twitch: `https://yourdomain.com/auth/twitch/callback`
-- X/Twitter: `https://yourdomain.com/auth/x-twitter/callback`
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📝 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgments
-
-- [Laravel](https://laravel.com/)
-- [Laravel Socialite](https://laravel.com/docs/socialite)
-- [SocialiteProviders](https://socialiteproviders.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-
-## 📧 Support
-
-For questions or issues:
-- Open an issue on GitHub
-- Check [OAUTH_SETUP.md](OAUTH_SETUP.md) for provider-specific help
-- Visit [Laravel Socialite Documentation](https://laravel.com/docs/socialite)
-
----
-
-**Made with ❤️ using Laravel**
+Abre un issue en GitHub
+Consulta OAUTH_SETUP.md para ayuda específica de cada proveedor
+Visita la Documentación de Laravel Socialite
